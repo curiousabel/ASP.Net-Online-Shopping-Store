@@ -13,5 +13,10 @@ namespace Casestudy.Models
         {
             return _db.Brands.ToList<Brand>();
         }
+        public string GetName(int id)
+        {
+            Brand cat = _db.Brands.First(c => c.Id == id);
+            return cat.Name;
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace Casestudy.Controllers
         {
             ProductModel model = new ProductModel(_db);
             ProductViewModel viewModel = new ProductViewModel();
-            viewModel.Name = brand.BrandName;
+            viewModel.BrandName = brand.BrandName;
             viewModel.Products = model.GetAllByBrand(brand.Id);
             return View(viewModel);
         }

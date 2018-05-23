@@ -9,10 +9,11 @@ namespace Casestudy.Models
     {
         private List<Brand> _brands;
         public IEnumerable<Product> Products { get; set; }
-        [Required]
+        
         public int Qty { get; set; }
         public int Id { get; set; }
         public string BrandName { get; set; }
+        public string ProductId { get; set; }
         public int BrandId { get; set; }
         public IEnumerable<SelectListItem> GetBrands()
         {
