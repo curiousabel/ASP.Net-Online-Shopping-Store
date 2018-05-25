@@ -2,6 +2,13 @@
     ViewData["Title"] = "Home Page";
 }
 <div class="row">
-    <div class="col-md-3">
-    </div>
+    <img  alt="" src="~/images/footlocker.jpg" height="300" width="300" class="center-block" /><br />
+
+    <h3 style="margin-top:10%;" class="text-center">
+        @if (ViewBag.Message != null)
+        {
+            ViewBag.Message = ViewBag.Message.Replace("\"", "");
+        }
+        @ViewBag.Message
+    </h3>
 </div>

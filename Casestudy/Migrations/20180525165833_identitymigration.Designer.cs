@@ -11,9 +11,10 @@ using System;
 namespace Casestudy.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180525165833_identitymigration")]
+    partial class identitymigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,18 +28,8 @@ namespace Casestudy.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
-                    b.Property<string>("Address1");
-
-                    b.Property<int>("Age");
-
-                    b.Property<string>("City");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
-
-                    b.Property<string>("Country");
-
-                    b.Property<string>("CreditcardType");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256);
@@ -53,8 +44,6 @@ namespace Casestudy.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
-                    b.Property<string>("Mailcode");
-
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
@@ -66,8 +55,6 @@ namespace Casestudy.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("Region");
 
                     b.Property<string>("SecurityStamp");
 

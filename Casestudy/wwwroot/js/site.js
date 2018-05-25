@@ -1,5 +1,8 @@
 ﻿// Write your JavaScript code.
 $(function () {
+    if ($("#register_popup") !== undefined) {
+        $('#register_popup').modal('show');
+    }
     // details click - to load popup on catalogue
     // display message if modal still loaded
     if ($('#detailsId').val() > 0) {
@@ -13,12 +16,36 @@ $(function () {
         $("#results").text("");
         CopyToModal(Id, data);
     });
+    $('.nav-tabs a').on('show.bs.tab', function (e) {
+        if ($(e.relatedTarget).text() === 'Demographic') { // tab 1
+            $('#Firstname').valid()
+            $('#Lastname').valid()
+            if ($('#Firstname').valid() === false || $('#Lastname').valid() === false) {
+                return false; // suppress click
+            }
+        }
+        if ($(e.relatedTarget).text() === 'Address') { // tab 2
+            $('#Address1').valid()
+            $('#City').valid()
+            if ($('#Address1').valid() === false || $('#City').valid() === false) {
+                return false; // suppress click
+            }
+        }
+        if ($(e.relatedTarget).text() === 'Account') { // tab 3
+            $('#Email').valid()
+            $('#Password').valid()
+            $('#RepeatPassword').valid()
+            if ($('#Email').valid() === false || $('#Password').valid() === false || $('#RepeatPassword').valid() === false) {
+                return false; // suppress click
+            }
+        }
+    }); // show bootstrap tab
 });
 let CopyToModal = (id, data) => {
     $("#qty").val("0");
     $("#price").text(data.Price);
-   
+
     $("#description").text(data.Description);
     $("#detailsGraphic").attr("src", data.GraphicName);
     $("#detailsId").val(id);
-}
+};
