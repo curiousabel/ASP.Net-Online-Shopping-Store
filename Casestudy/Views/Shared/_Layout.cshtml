@@ -18,9 +18,9 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
+    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color:#003B46">
+        <div class="container" >
+            <div class="navbar-header" >
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -28,19 +28,35 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Data" asp-action="Index">Data Routines</a></li>
-                    <li><a asp-area="" asp-controller="Brand" asp-action="Index">Brands</a></li>
-                    <li><a asp-area="" asp-controller="Register" asp-action="Index">Register</a></li>
+            <div class="navbar-collapse collapse" >
+                <span class="pull-right" style="padding-right:5%;padding-top:1%;color:white"><span class="glyphicon glyphicon-certificate"></span>
+                @Context.Session.GetString(SessionVars.LoginStatus)</span>
+                <ul class="nav navbar-nav" style="color:black">
+                    <li> </li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+                    <li><a asp-area="" asp-controller="Brand" asp-action="Index"><span class="glyphicon glyphicon-grain"></span>Brands</a></li>
+                    <li><a href="/Cart"><span class="glyphicon glyphicon-shopping-cart"></span> View Cart</a></li> 
+                    <li ><a asp-area="" asp-controller="Register" asp-action="Index"><span class="glyphicon glyphicon-pencil"></span>  Register</a> </li>
+                    <li><a asp-area="" asp-controller="Login" asp-action="Index"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a asp-area="" asp-controller="Login" asp-action="Logoff"><span class="glyphicon glyphicon-log-out"></span> Logoff</a></li>
+
                 </ul>
+                <form class="navbar-form navbar-left" action="/action_page.php">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </nav>
-    <div class="container body-content">
+    <div class="container body-content  " >
         @RenderBody()
-        <hr />
+        <hr style="color:yellow" />
     </div>
     <footer class="footer" style="margin-left:10%;margin-top:10%;">
         <p>&copy; 2018 - Info3067</p>

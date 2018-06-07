@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using Casestudy.Models;
+using Casestudy.Utils;
+
 namespace Casestudy.Controllers
 {
     public class RegisterController : Controller
@@ -36,7 +38,8 @@ namespace Casestudy.Controllers
                 if (result.Succeeded)
                 {
                     await _signInMgr.SignInAsync(user, isPersistent: false);
-                    HttpContext.Session.SetString("LoginStatus", "logged on as " + model.Email); HttpContext.Session.SetString("Message", "Registered, logged on as " + model.Email);
+                    HttpContext.Session.SetString(SessionVars.LoginStatus, "logged on as " + model.Email);
+                    HttpContext.Session.SetString(SessionVars.Message, "Registered, logged on as " + model.Email);
                 }
                 else
                 {

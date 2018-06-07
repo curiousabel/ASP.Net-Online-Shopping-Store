@@ -17,5 +17,9 @@ namespace Casestudy.Models
         {
             return _db.Products.Where(item => item.Brand.Id == id).ToList();
         }
+        public Product GetById(string id)
+        {
+            return _db.Products.Single(product => product.Id == id);
+        }
     }
 }

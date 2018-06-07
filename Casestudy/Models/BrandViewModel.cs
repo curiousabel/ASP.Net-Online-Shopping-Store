@@ -9,7 +9,6 @@ namespace Casestudy.Models
     {
         private List<Brand> _brands;
         public IEnumerable<Product> Products { get; set; }
-        
         public int Qty { get; set; }
         public int Id { get; set; }
         public string BrandName { get; set; }

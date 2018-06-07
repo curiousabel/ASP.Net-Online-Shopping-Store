@@ -10,12 +10,12 @@
     </div>
     <div class="text-center" style="padding-top:10px;">
         @{
-            Dictionary<string, object>
-                cart = Context.Session.Get<Dictionary<string, Object>>("cart");
-            decimal subTot = 0;
-            decimal tax = 0;
-            decimal ordTot = 0;
-            decimal extended = 0;
+        Dictionary<string, object>
+            cart = Context.Session.Get<Dictionary<string, Object>>(SessionVars.Cart);
+        decimal subTot = 0;
+        decimal tax = 0;
+        decimal ordTot = 0;
+        decimal extended = 0;
 
         }
         <table class="table table-striped">
@@ -27,29 +27,29 @@
                 <th class="col-xs-10 text-center">Extended</th>
             </tr>
             @{
-                if (cart != null)
+            if (cart != null)
+            {
+                foreach (var key in cart.Keys)
                 {
-                    foreach (var key in cart.Keys)
+                    ProductViewModel product = JsonConvert.DeserializeObject
+                    <ProductViewModel>
+                    (Convert.ToString(cart[key]));
+                    if (product.Qty > 0)
                     {
-                        ProductViewModel product = JsonConvert.DeserializeObject
-                        <ProductViewModel>
-                        (Convert.ToString(cart[key]));
-                        if (product.Qty > 0)
-                        {
-                            extended = product.MSRP * product.Qty;
-                            subTot += extended;
-                            tax = subTot * (decimal)0.13;
-                            ordTot = subTot + tax;
-                            <tr>
-                                <td class="col-xs-2 text-center">@product.Id</td>
-                                <td class="col-xs-4 text-center">@product.ProductName</td>
-                                <td class="col-xs-6 text-center">@String.Format("{0:n2}", product.MSRP)</td>
-                                <td class="col-xs-8 text-center">@product.Qty</td>
-                                <td class="col-xs-10 text-center">@String.Format("{0:n2}", extended)</td>
-                            </tr>
-                        }
-                    }
+                        extended = product.MSRP * product.Qty;
+                        subTot += extended;
+                        tax = subTot * (decimal)0.13;
+                        ordTot = subTot + tax;
+                        <tr>
+                            <td class="col-xs-2 text-center">@product.Id</td>
+                            <td class="col-xs-4 text-center">@product.ProductName</td>
+                            <td class="col-xs-6 text-center">@String.Format("{0:n2}", product.MSRP)</td>
+                            <td class="col-xs-8 text-center">@product.Qty</td>
+                            <td class="col-xs-10 text-center">@String.Format("{0:n2}", extended)</td>
+                        </tr>
                 }
+            }
+        }
             }
         </table>
         <hr />
@@ -59,15 +59,27 @@
                 <td class="col-xs-10 text-right">SubTotal:    $@String.Format("{0:n2}", subTot)</td>
 
             </tr>
-            <tr style="color:goldenrod" >
-            
+            <tr style="color:goldenrod">
+
                 <td class="col-xs-10 text-right">Tax:         $@String.Format("{0:n2}", tax)</td>
-               
+
             </tr>
             <tr style="color:goldenrod">
                 <td class="col-xs-10 text-right">Order Total: $@String.Format("{0:n2}", ordTot)</td>
             </tr>
         </table>
-        <a href="/Cart/ClearCart" class="btn btn-sm btn-success">Clear Cart</a>
+      
+
+        <div class="text-center">
+            <form asp-controller="Cart" asp-action="AddCart" method="post" role="form">
+                @if (Context.Session.GetString(SessionVars.User) != null)
+             {
+            <button type="submit" class="btn btn-sm btn-primary" id="modalbtn">Add Cart</button>
+              }
+                &nbsp; <a href="/Cart/ClearCart" class="btn btn-sm btn-success">Clear Cart</a>
+            </form>
+        </div>
+
+       
     </div>
 </div>

@@ -32,7 +32,8 @@ namespace Casestudy
                 // Set a short timeout for easy testing.
                 options.IdleTimeout = TimeSpan.FromSeconds(120); // 2 min session
                 options.Cookie.HttpOnly = true;
-            });
+            });
+
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             // Add Identity options
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -72,13 +73,15 @@ namespace Casestudy
             app.UseStaticFiles();
             app.UseSession();
             // Identity additions
-            app.UseAuthentication();
+            app.UseAuthentication();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                 name: "default",
                 template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            });
+
         }
     }
 }

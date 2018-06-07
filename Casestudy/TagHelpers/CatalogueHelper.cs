@@ -29,10 +29,10 @@ namespace Casestudy.TagHelpers
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (_session.Get<ProductViewModel[]>("product") != null && Convert.ToInt32(BrandId) > 0)
+            if (_session.Get<ProductViewModel[]>(SessionVars.Products) != null && Convert.ToInt32(BrandId) > 0)
             {
                 var innerHtml = new StringBuilder();
-                ProductViewModel[] product = _session.Get<ProductViewModel[]>("product");
+                ProductViewModel[] product = _session.Get<ProductViewModel[]>(SessionVars.Products);
                 innerHtml.Append("<div class=\"col-xs-12\" style=\"font-size:x-large;\"><span>Catalogue</span></div>");
                 foreach (ProductViewModel item in product)
                 {
@@ -41,11 +41,11 @@ namespace Casestudy.TagHelpers
                         // remove double apostrophe
                         item.Description = item.Description.Contains("''") ? item.Description.Replace("''", "") : item.Description;
                         item.JsonData = JsonConvert.SerializeObject(item);
-                        innerHtml.Append("<div class=\"col-sm-3 col-xs-12 text-center\" style=\"border:solid;\">");
-                        innerHtml.Append("<span class=\"col-xs-12\"><img src="+item.GraphicName+" height=\"120\" width=\"200\"/></span>");
+                        innerHtml.Append("<div  class=\"col-sm-3 col-xs-12 text-center\" \">");
+                        innerHtml.Append("<span style=\"padding-left: 10px;class=\"col-xs-12\"><img src=" + item.GraphicName+" height=\"120\" width=\"\"/></span>");
                         innerHtml.Append("<p><span style=\"font-size:large;\">" + item.Description.Substring(0, 10) + "...</span></p><div>");
                         innerHtml.Append("<span>For Price Info.<br />Click Details</span></div>");
-                        innerHtml.Append("<div style=\"padding-bottom: 10px;\"><a href=\"#details_popup\" data-toggle=\"modal\" class=\"btn btn-default\"");
+                        innerHtml.Append("<div style=\"padding-bottom: 10px; color:cadetblue;\"><a href=\"#details_popup\" data-toggle=\"modal\" class=\"btn btn-default\"");
                         innerHtml.Append(" id=\"modalbtn" + item.Id + "\" data-id=\"" + item.Id + "\" data-details='" + item.JsonData + "'>Details</a></div></div>");
                     }
                 }

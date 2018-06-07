@@ -15,7 +15,7 @@ namespace Casestudy.Controllers
         public IActionResult Index(BrandViewModel vm)
         {
             // only build the catalogue once
-            if (HttpContext.Session.Get<List<Brand>>("brands") == null)
+            if (HttpContext.Session.Get<List<Brand>>(SessionVars.Brands) == null)
             {
                 // no session information so let's go to the database
                 try
@@ -23,7 +23,7 @@ namespace Casestudy.Controllers
                     BrandModel braModel = new BrandModel(_db);
                     // now load the categories
                     List<Brand> brands = braModel.GetAll();
-                    HttpContext.Session.Set<List<Brand>>("brands", brands);
+                    HttpContext.Session.Set<List<Brand>>(SessionVars.Brands, brands);
                     vm.SetBrands(brands);
                 }
                 catch (Exception ex)
@@ -34,7 +34,7 @@ namespace Casestudy.Controllers
             else
             {
                 // no need to go back to the database as information is already in the session
-                vm.SetBrands(HttpContext.Session.Get<List<Brand>>("brands"));
+                vm.SetBrands(HttpContext.Session.Get<List<Brand>>(SessionVars.Brands));
                 ProductModel ProdModel = new ProductModel(_db);
                 vm.Products = ProdModel.GetAllByBrand(vm.Id);
             }
@@ -63,9 +63,9 @@ namespace Casestudy.Controllers
                     vms.Add(mvm);
                 }
                 ProductViewModel[] myproduct = vms.ToArray();
-                HttpContext.Session.Set<ProductViewModel[]>("product", myproduct);
+                HttpContext.Session.Set<ProductViewModel[]>(SessionVars.Products, myproduct);
             }
-            vm.SetBrands(HttpContext.Session.Get<List<Brand>>("brands"));
+            vm.SetBrands(HttpContext.Session.Get<List<Brand>>(SessionVars.Brands));
             return View("Index", vm); // need the original Index View here
         }
 
@@ -73,15 +73,15 @@ namespace Casestudy.Controllers
         public ActionResult SelectProduct(BrandViewModel vm)
         {
             Dictionary<string, object> cart;
-            if (HttpContext.Session.Get<Dictionary<string, Object>>("cart") == null)
+            if (HttpContext.Session.Get<Dictionary<string, Object>>(SessionVars.Cart) == null)
             {
                 cart = new Dictionary<string, object>();
             }
             else
             {
-                cart = HttpContext.Session.Get<Dictionary<string, object>>("cart");
+                cart = HttpContext.Session.Get<Dictionary<string, object>>(SessionVars.Cart);
             }
-            ProductViewModel[] products = HttpContext.Session.Get<ProductViewModel[]>("product");
+            ProductViewModel[] products = HttpContext.Session.Get<ProductViewModel[]>(SessionVars.Products);
             String retMsg = "";
             foreach (ProductViewModel product in products)
             {
@@ -104,8 +104,8 @@ namespace Casestudy.Controllers
                 }
             }
             ViewBag.AddMessage = retMsg;
-            HttpContext.Session.Set<Dictionary<string, Object>>("cart", cart);
-            vm.SetBrands(HttpContext.Session.Get<List<Brand>>("brands"));
+            HttpContext.Session.Set<Dictionary<string, Object>>(SessionVars.Cart, cart);
+            vm.SetBrands(HttpContext.Session.Get<List<Brand>>(SessionVars.Brands));
             return View("Index", vm);
         }
     }
