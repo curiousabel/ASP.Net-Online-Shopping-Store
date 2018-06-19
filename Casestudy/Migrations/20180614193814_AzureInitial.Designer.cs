@@ -11,8 +11,8 @@ using System;
 namespace Casestudy.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180531175707_cartorder")]
-    partial class cartorder
+    [Migration("20180614193814_AzureInitial")]
+    partial class AzureInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

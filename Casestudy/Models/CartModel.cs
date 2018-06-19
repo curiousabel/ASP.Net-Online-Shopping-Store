@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Linq;
 namespace Casestudy.Models
 {
     public class CartModel
@@ -9,6 +10,11 @@ namespace Casestudy.Models
         public CartModel(AppDbContext ctx)
         {
             _db = ctx;
+        }
+
+        public List<Cart> GetAll()
+        {
+            return _db.Cart.ToList(); 
         }
         public String AddCart(Dictionary<string, object> items, string user)
         {
@@ -89,6 +95,32 @@ namespace Casestudy.Models
                 }
             }
             
+        }
+        public List<CartViewModel> GetCartDetails(int tid, string uid)
+        {
+            List<CartViewModel> allDetails = new List<CartViewModel>();
+            // LINQ way of doing INNER JOINS
+            var results = from t in _db.Set<Cart>()
+                          join ti in _db.Set<CartLineItem>() on t.Id equals ti.CartId
+                          join mi in _db.Set<Product>() on ti.ProductId equals mi.Id
+                          where (t.UserId == uid && t.Id == tid)
+                          select new CartViewModel
+                          {
+                             // CartId = mi.Id,
+                              UserId = uid,
+                              MSRP = mi.MSRP,
+                              QtyBackOrder = mi.QtyOnBackOrders,
+                              QtySold = ti.QtySold,
+                             // QtyOnHand = ti.q,
+                              ProductName = mi.ProductName,
+                              OrderAmount = t.CartAmount, 
+                             
+                              Description = mi.Description,
+                              Qty = ti.QtyOrder,
+                             DateCreated = t.CartDate.ToString("yyyy/MM/dd - hh:mm tt")
+                          };
+            allDetails = results.ToList<CartViewModel>();
+            return allDetails;
         }
     }
 }

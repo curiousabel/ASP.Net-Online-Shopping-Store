@@ -28,20 +28,19 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <div class="navbar-collapse collapse" >
+            <div class="navbar-collapse collapse pull-left"  >
                 <span class="pull-right" style="padding-right:5%;padding-top:1%;color:white"><span class="glyphicon glyphicon-certificate"></span>
                 @Context.Session.GetString(SessionVars.LoginStatus)</span>
-                <ul class="nav navbar-nav" style="color:black">
-                    <li> </li>
+                <ul class="nav navbar-nav " style="color:black" >
                     <li><a asp-area="" asp-controller="Home" asp-action="Index"><span class="glyphicon glyphicon-home"></span> Home</a></li>
                     <li><a asp-area="" asp-controller="Brand" asp-action="Index"><span class="glyphicon glyphicon-grain"></span>Brands</a></li>
                     <li><a href="/Cart"><span class="glyphicon glyphicon-shopping-cart"></span> View Cart</a></li> 
                     <li ><a asp-area="" asp-controller="Register" asp-action="Index"><span class="glyphicon glyphicon-pencil"></span>  Register</a> </li>
                     <li><a asp-area="" asp-controller="Login" asp-action="Index"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     <li><a asp-area="" asp-controller="Login" asp-action="Logoff"><span class="glyphicon glyphicon-log-out"></span> Logoff</a></li>
-
+                    <li><a asp-area="" asp-controller="Cart" asp-action="List">Carts</a></li>
                 </ul>
-                <form class="navbar-form navbar-left" action="/action_page.php">
+                <form class="navbar-form navbar-right" action="/action_page.php">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search">
                         <div class="input-group-btn">

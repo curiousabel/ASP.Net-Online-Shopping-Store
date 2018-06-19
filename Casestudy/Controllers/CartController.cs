@@ -89,6 +89,21 @@ namespace Casestudy.Controllers
         {
             _db = context;
         }
+
+        [Route("[action]")]
+        public IActionResult GetCarts()
+        {
+            CartModel model = new CartModel(_db);
+            return Ok(model.GetAll());
+        }
+
+        [Route("[action]/{tid:int}")]
+        public IActionResult GetCartDetails(int tid)
+        {
+            CartModel model = new CartModel(_db);
+            return Ok(model.GetCartDetails(tid, HttpContext.Session.GetString(SessionVars.User)));
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -117,11 +132,23 @@ namespace Casestudy.Controllers
             }
             catch (Exception ex) // big problem
             {
-                retMessage = "Tray was not created, try again later! - " + ex.Message;
+                retMessage = "Cart was not created, try again later! - " + ex.Message;
             }
-            HttpContext.Session.Remove(SessionVars.Cart); // clear out current tray once persisted
+            HttpContext.Session.Remove(SessionVars.Cart); // clear out current Cart once persisted
             HttpContext.Session.SetString(SessionVars.Message, retMessage);
             return Redirect("/Home");
         }
+        public IActionResult List()
+        {
+            // they can't list Carts if they're not logged on
+            if (HttpContext.Session.GetString(SessionVars.User) == null)
+            {
+                return Redirect("/Login");
+            }
+            return View("List");
+        }
+
+
+
     }
 }
