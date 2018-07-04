@@ -61,7 +61,7 @@ namespace Casestudy.Models
                                     cItem.QtySold = product.QtyOnHand;
                                     cItem.QtyBackOrdered = cItem.QtyOrder - product.QtyOnHand;
                                     product.QtyOnHand = 0;
-                                    product.QtyOnBackOrders += cItem.QtyBackOrdered;
+                                    product.QtyOnBackOrders = cItem.QtyBackOrdered;
                                     backOrder = " some items were backOrdered";
                                 }
                                 else
@@ -69,7 +69,6 @@ namespace Casestudy.Models
                                     cItem.QtySold = cItem.QtyOrder;
                                     product.QtyOnHand -= cItem.QtySold;
                                     product.QtyOnBackOrders = 0;
-                                   
                                 }
                                 _db.Products.Update(product);
                                 _db.CartLineItems.Add(cItem);
@@ -106,17 +105,20 @@ namespace Casestudy.Models
                           where (t.UserId == uid && t.Id == tid)
                           select new CartViewModel
                           {
-                             // CartId = mi.Id,
+                              OrderAmount = t.CartAmount,
+                              ProductId = mi.Id,
                               UserId = uid,
-                              MSRP = mi.MSRP,
-                              QtyBackOrder = mi.QtyOnBackOrders,
-                              QtySold = ti.QtySold,
-                             // QtyOnHand = ti.q,
                               ProductName = mi.ProductName,
-                              OrderAmount = t.CartAmount, 
+                              MSRP = mi.MSRP,
+                              QtySold = ti.QtyOrder,
+
+                              QtyBackOrder = mi.QtyOnBackOrders,
                              
+                             QtyOnHand = ti.QtySold,
+                            
+                                                         
                               Description = mi.Description,
-                              Qty = ti.QtyOrder,
+                            //  Qty = ti.QtyOrder,
                              DateCreated = t.CartDate.ToString("yyyy/MM/dd - hh:mm tt")
                           };
             allDetails = results.ToList<CartViewModel>();

@@ -1,5 +1,24 @@
 ﻿// Write your JavaScript code.
 $(function () {
+    // for partial view
+    $(document).on('submit', '#brandForm', function () {
+        let $theForm = $(this);
+        // manually trigger validation
+        $.post('/Brand/SelectProduct', $theForm.serialize())
+            .done(response => $('#results').text(response))
+        return false;
+    });
+
+    //// for partial view
+    //$(document).on('sumbit', '#brandForm', function () {
+    //    let $theForm = $(this);
+    //    //
+    //    $.post('/Brand/SelectProduct', $theForm.serialize()).done(response => $('#results').text(response))
+    //    return false;
+    //});
+
+
+
     if ($("#register_popup") !== undefined) {
         $('#register_popup').modal('show');
     }

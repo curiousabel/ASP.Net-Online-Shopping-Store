@@ -7,12 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Casestudy.Models;
 using Microsoft.AspNetCore.Http;
 using Casestudy.Utils;
+using Microsoft.AspNetCore.Authorization;
+
 namespace Casestudy.Controllers
 {
     public class HomeController : Controller
     {
-     
-            public IActionResult Index()
+        [AllowAnonymous]
+        public IActionResult Index()
             {
                 if (HttpContext.Session.GetString(SessionVars.LoginStatus) == null)
                 {

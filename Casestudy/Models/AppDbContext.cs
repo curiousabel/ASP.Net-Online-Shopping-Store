@@ -11,6 +11,8 @@ namespace Casestudy.Models
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Cart> Cart { get; set; }
         public virtual DbSet<CartLineItem> CartLineItems { get; set; }
+        public virtual DbSet<Branch>  Branches { get; set; }
+
 
     }
 }

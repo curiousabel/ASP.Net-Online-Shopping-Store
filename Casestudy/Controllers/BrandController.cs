@@ -101,12 +101,12 @@ namespace Casestudy.Controllers
                     }
                     vm.BrandId = product.BrandId;
                     break;
-                }
+                } 
             }
             ViewBag.AddMessage = retMsg;
             HttpContext.Session.Set<Dictionary<string, Object>>(SessionVars.Cart, cart);
             vm.SetBrands(HttpContext.Session.Get<List<Brand>>(SessionVars.Brands));
-            return View("Index", vm);
+            return PartialView("AddToCartPratial");
         }
     }
 }
